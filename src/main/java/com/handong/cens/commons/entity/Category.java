@@ -1,4 +1,4 @@
-package my.project.crawling.commons.entity;
+package com.handong.cens.commons.entity;
 
 import lombok.Getter;
 

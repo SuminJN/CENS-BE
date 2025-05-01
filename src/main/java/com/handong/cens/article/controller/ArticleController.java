@@ -1,8 +1,8 @@
-package my.project.crawling.Article.controller;
+package com.handong.cens.article.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import my.project.crawling.Article.service.ArticleService;
+import com.handong.cens.article.service.ArticleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

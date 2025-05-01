@@ -1,11 +1,11 @@
-package my.project.crawling.Article.service;
+package com.handong.cens.article.service;
 
 import java.io.IOException;
 
 import lombok.RequiredArgsConstructor;
-import my.project.crawling.Article.entity.Article;
-import my.project.crawling.Article.repository.ArticleRepository;
-import my.project.crawling.commons.entity.Category;
+import com.handong.cens.article.entity.Article;
+import com.handong.cens.article.repository.ArticleRepository;
+import com.handong.cens.commons.entity.Category;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

@@ -1,4 +1,4 @@
-package my.project.crawling.Article.entity;
+package com.handong.cens.article.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
