@@ -1,6 +1,5 @@
 package com.handong.cens.article.dto.response;
 
-import com.handong.cens.article.entity.Article;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
