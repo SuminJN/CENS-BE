@@ -21,12 +21,9 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/save")
-    public void saveArticles() {
-        try {
-            articleService.saveArticles();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+    public ResponseEntity<Void> saveArticles() {
+        articleService.saveArticles();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping

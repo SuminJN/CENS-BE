@@ -12,6 +12,7 @@ public enum ErrorCode {
 
     /* 400 BAD_REQUEST : 잘못된 요청 */
     MISSING_REFRESH_TOKEN(BAD_REQUEST, "refresh token이 존재하지 않습니다."),
+    MISSING_CATEGORY_CODE(BAD_REQUEST, "존재하지 않는 카테고리 코드입니다."),
 
     /* 403 FORBIDDEN : 접근 권한 제한 */
     /* Valid : 유효한 */
@@ -22,6 +23,9 @@ public enum ErrorCode {
     USER_NOT_FOUND(NOT_FOUND, "해당 회원을 찾을 수 없습니다."),
     CATEGORY_NOT_FOUND(NOT_FOUND, "해당 카테고리를 찾을 수 없습니다."),
     TOKEN_NOT_FOUND(NOT_FOUND, "존재하지 않는 토큰입니다."),
+    CRAWLING_PAGE_NOT_FOUND(NOT_FOUND, "크롤링할 페이지를 찾을 수 없습니다."),
+    ARTICLE_CONTENT_NOT_FOUND(NOT_FOUND, "해당 기사의 본문 내용을 찾을 수 없습니다."),
+    ARTICLE_DATE_NOT_FOUND(NOT_FOUND, "해당 기사의 날짜를 찾을 수 없습니다."),
 
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     /* DUPLICATE : (다른 무엇과) 똑같은 */

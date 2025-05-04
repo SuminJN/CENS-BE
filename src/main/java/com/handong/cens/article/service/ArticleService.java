@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.handong.cens.article.dto.response.ArticleResponseDto;
+import com.handong.cens.commons.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import com.handong.cens.article.entity.Article;
 import com.handong.cens.article.repository.ArticleRepository;
@@ -15,6 +16,8 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.handong.cens.commons.exception.ErrorCode.*;
+
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
@@ -22,7 +25,7 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional
-    public void saveArticles() throws IOException {
+    public void saveArticles() {
 
         // {100: 정치, 101: 경제, 102: 사회, 103: 생활/문화, 104: 세계, 105: IT/과학}
         for (Category category : Category.values()) {
@@ -34,7 +37,11 @@ public class ArticleService {
             Document doc = null;
 
             // 지정된 URL로 연결하여 HTML 문서를 가져옴
-            doc = Jsoup.connect(url).get();
+            try {
+                doc = Jsoup.connect(url).get();
+            } catch (IOException e) {
+                throw new CustomException(CRAWLING_PAGE_NOT_FOUND);
+            }
 
             // 지정된 선택자를 사용하여 뉴스 제목 및 링크 요소를 선택
             Elements titles = doc.select(headlineNewsSelector);
@@ -46,8 +53,20 @@ public class ArticleService {
                 String articleLink = element.attr("href"); // 뉴스 링크
 
                 String title = element.text();
-                String content = Jsoup.connect(articleLink).get().select(articleSelector).text();
-                String date = Jsoup.connect(articleLink).get().select(dateSelector).text();
+
+                String content = null;
+                try {
+                    content = Jsoup.connect(articleLink).get().select(articleSelector).text();
+                } catch (IOException e) {
+                    throw new CustomException(ARTICLE_CONTENT_NOT_FOUND);
+                }
+
+                String date = null;
+                try {
+                    date = Jsoup.connect(articleLink).get().select(dateSelector).text();
+                } catch (IOException e) {
+                    throw new CustomException(ARTICLE_DATE_NOT_FOUND);
+                }
 
                 // Article 객체 생성 및 저장
                 Article article = Article.builder()
@@ -97,6 +116,6 @@ public class ArticleService {
                 return category.getDescription();
             }
         }
-        throw new IllegalArgumentException("Invalid category code: " + code);
+        throw new CustomException(MISSING_CATEGORY_CODE);
     }
 }
