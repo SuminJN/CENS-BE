@@ -1,7 +1,9 @@
 package com.handong.cens.article.service;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.handong.cens.article.dto.response.ArticleResponseDto;
 import lombok.RequiredArgsConstructor;
 import com.handong.cens.article.entity.Article;
 import com.handong.cens.article.repository.ArticleRepository;
@@ -59,5 +61,42 @@ public class ArticleService {
                 articleRepository.save(article);
             }
         }
+    }
+
+    public List<ArticleResponseDto> getAllArticles() {
+        List<Article> articles = articleRepository.findAll();
+
+        return articles.stream()
+                .map(article -> ArticleResponseDto.builder()
+                        .articleId(article.getArticleId())
+                        .title(article.getTitle())
+                        .content(article.getContent())
+                        .date(article.getDate())
+                        .category(article.getCategory())
+                        .build())
+                .toList();
+    }
+
+    public List<ArticleResponseDto> getArticlesByCategoryCode(int code) {
+        List<Article> articles = articleRepository.findByCategory(getDescriptionByCode(code));
+
+        return articles.stream()
+                .map(article -> ArticleResponseDto.builder()
+                        .articleId(article.getArticleId())
+                        .title(article.getTitle())
+                        .content(article.getContent())
+                        .date(article.getDate())
+                        .category(article.getCategory())
+                        .build())
+                .toList();
+    }
+
+    private String getDescriptionByCode(int code) {
+        for (Category category : Category.values()) {
+            if (category.getCode() == code) {
+                return category.getDescription();
+            }
+        }
+        throw new IllegalArgumentException("Invalid category code: " + code);
     }
 }
