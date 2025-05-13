@@ -118,4 +118,9 @@ public class ArticleService {
         }
         throw new CustomException(MISSING_CATEGORY_CODE);
     }
+
+    @Transactional
+    public void clearArticles() {
+        articleRepository.deleteAll();
+    }
 }

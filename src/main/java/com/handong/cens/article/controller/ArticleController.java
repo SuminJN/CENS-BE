@@ -34,4 +34,10 @@ public class ArticleController {
             return ResponseEntity.ok().body(articleService.getArticlesByCategoryCode(code));
         }
     }
+
+    @GetMapping("/clear")
+    public ResponseEntity<Void> clearArticles() {
+        articleService.clearArticles();
+        return ResponseEntity.ok().build();
+    }
 }
