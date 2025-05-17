@@ -74,6 +74,7 @@ public class ArticleService {
                         .content(content)
                         .date(date)
                         .category(category.getDescription())
+                        .originalUrl(articleLink)
                         .build();
 
                 // Article 객체를 데이터베이스에 저장
