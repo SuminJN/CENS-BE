@@ -28,4 +28,5 @@ public class Article {
 
     private String date;
 
+    private String originalUrl;
 }
