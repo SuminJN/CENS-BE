@@ -26,6 +26,7 @@ public enum ErrorCode {
     CRAWLING_PAGE_NOT_FOUND(NOT_FOUND, "크롤링할 페이지를 찾을 수 없습니다."),
     ARTICLE_CONTENT_NOT_FOUND(NOT_FOUND, "해당 기사의 본문 내용을 찾을 수 없습니다."),
     ARTICLE_DATE_NOT_FOUND(NOT_FOUND, "해당 기사의 날짜를 찾을 수 없습니다."),
+    ARTICLE_NOT_FOUND(NOT_FOUND, "해당 기사를 찾을 수 없습니다."),
 
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     /* DUPLICATE : (다른 무엇과) 똑같은 */

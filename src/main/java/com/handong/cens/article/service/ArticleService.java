@@ -9,23 +9,32 @@ import lombok.RequiredArgsConstructor;
 import com.handong.cens.article.entity.Article;
 import com.handong.cens.article.repository.ArticleRepository;
 import com.handong.cens.commons.entity.Category;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.handong.cens.commons.exception.ErrorCode.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final OpenAiChatModel openAiChatModel;
 
     @Transactional
     public void saveArticles() {
+
+        int count = 0; // 크롤링한 뉴스 개수
 
         // {100: 정치, 101: 경제, 102: 사회, 103: 생활/문화, 104: 세계, 105: IT/과학}
         for (Category category : Category.values()) {
@@ -75,13 +84,37 @@ public class ArticleService {
                         .date(date)
                         .category(category.getDescription())
                         .originalUrl(articleLink)
+//                        .summary(summarizeAndSave(content))
                         .build();
 
                 // Article 객체를 데이터베이스에 저장
                 articleRepository.save(article);
+
+                log.info("{} - Article saved: {}",  ++count, article.getTitle());
             }
         }
     }
+
+    public String summarizeAndSave(String content) {
+        String prompt = "다음 기사를 한국어로 1문장 이내로 요약해줘:\n\n" + content;
+
+        return openAiChatModel.call(prompt);
+    }
+
+//    @Transactional
+//    public String getSummary(Long id) {
+//        Article article = articleRepository.findById(id)
+//                .orElseThrow(() -> new CustomException(ARTICLE_NOT_FOUND));
+//
+//        String prompt = "다음 기사를 한국어로 1문장 이내로 요약해줘:\n\n" + article.getContent();
+//
+//        String response = openAiChatModel.call(prompt);
+//
+//        // 요약된 내용을 데이터베이스에 저장
+//        article.setSummary(response);
+//
+//        return response;
+//    }
 
     public List<ArticleResponseDto> getAllArticles() {
         List<Article> articles = articleRepository.findAll();

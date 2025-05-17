@@ -1,10 +1,7 @@
 package com.handong.cens.article.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
@@ -23,10 +20,14 @@ public class Article {
 
     private String title;
 
-    @Column(length = 50000)
+    @Lob
     private String content;
 
     private String date;
 
     private String originalUrl;
+
+    @Lob
+    @Setter
+    private String summary;
 }
