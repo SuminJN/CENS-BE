@@ -38,9 +38,9 @@ public class ArticleController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping("/summary/{articleId}")
-//    public ResponseEntity<String> getSummary(@PathVariable Long articleId) {
-//        String summary = articleService.getSummary(articleId);
-//        return ResponseEntity.ok().body(summary);
-//    }
+    @GetMapping("/summary/{articleId}")
+    public ResponseEntity<String> getSummary(@PathVariable Long articleId) {
+        String summary = articleService.getSummary(articleId);
+        return ResponseEntity.ok().body(summary);
+    }
 }
