@@ -101,20 +101,21 @@ public class ArticleService {
         return openAiChatModel.call(prompt);
     }
 
-//    @Transactional
-//    public String getSummary(Long id) {
-//        Article article = articleRepository.findById(id)
-//                .orElseThrow(() -> new CustomException(ARTICLE_NOT_FOUND));
-//
-//        String prompt = "다음 기사를 한국어로 1문장 이내로 요약해줘:\n\n" + article.getContent();
-//
-//        String response = openAiChatModel.call(prompt);
-//
-//        // 요약된 내용을 데이터베이스에 저장
-//        article.setSummary(response);
-//
-//        return response;
-//    }
+    @Transactional
+    public String getSummary(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ARTICLE_NOT_FOUND));
+
+        String prompt = "다음 기사를 한국어로 1문장 이내로 요약해줘:\n\n"
+                + article.getContent().substring(0, Math.min(article.getContent().length(), 500));
+
+        String response = openAiChatModel.call(prompt);
+
+        // 요약된 내용을 데이터베이스에 저장
+        article.setSummary(response);
+
+        return response;
+    }
 
     public List<ArticleResponseDto> getAllArticles() {
         List<Article> articles = articleRepository.findAll();
