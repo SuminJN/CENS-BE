@@ -58,6 +58,8 @@ public class ArticleService {
             // 각 뉴스 제목 요소를 순회하며 처리
             for (Element element : titles) {
 
+                boolean isEnabled = true;
+
                 // 뉴스 링크와 제목을 출력
                 String articleLink = element.attr("href"); // 뉴스 링크
 
@@ -67,18 +69,25 @@ public class ArticleService {
                 try {
                     content = Jsoup.connect(articleLink).get().select(articleSelector).text();
                 } catch (IOException e) {
-                    throw new CustomException(ARTICLE_CONTENT_NOT_FOUND);
+//                    throw new CustomException(ARTICLE_CONTENT_NOT_FOUND);
+                    log.info("기사 본문을 찾을 수 없습니다. 기사 링크: {}", articleLink);
+                    content = "본문 내용 없음"; // 본문 내용이 없을 경우 기본값 설정
+                    isEnabled = false;
                 }
 
                 String date = null;
                 try {
                     date = Jsoup.connect(articleLink).get().select(dateSelector).text();
                 } catch (IOException e) {
-                    throw new CustomException(ARTICLE_DATE_NOT_FOUND);
+//                    throw new CustomException(ARTICLE_DATE_NOT_FOUND);
+                    log.info("기사 날짜를 찾을 수 없습니다. 기사 링크: {}", articleLink);
+                    date = "날짜 정보 없음"; // 날짜 정보가 없을 경우 기본값 설정
+                    isEnabled = false;
                 }
 
                 // Article 객체 생성 및 저장
                 Article article = Article.builder()
+                        .articleStatus(isEnabled ? ArticleStatus.Enabled : ArticleStatus.Disabled)
                         .title(title)
                         .content(content)
                         .date(date)
