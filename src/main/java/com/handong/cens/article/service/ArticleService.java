@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.handong.cens.article.dto.response.ArticleResponseDto;
+import com.handong.cens.article.entity.ArticleStatus;
 import com.handong.cens.commons.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import com.handong.cens.article.entity.Article;
@@ -49,7 +50,9 @@ public class ArticleService {
             try {
                 doc = Jsoup.connect(url).get();
             } catch (IOException e) {
-                throw new CustomException(CRAWLING_PAGE_NOT_FOUND);
+//                throw new CustomException(CRAWLING_PAGE_NOT_FOUND);
+                log.info("크롤링할 페이지를 찾을 수 없습니다. URL: {}", url);
+                continue; // 페이지를 찾을 수 없으면 다음 카테고리로 넘어감
             }
 
             // 지정된 선택자를 사용하여 뉴스 제목 및 링크 요소를 선택
@@ -93,6 +96,7 @@ public class ArticleService {
                         .date(date)
                         .category(category.getDescription())
                         .originalUrl(articleLink)
+                        .summary("뉴스 요약 테스트 중 입니다.") // 요약은 나중에 OpenAI API로 처리
 //                        .summary(summarizeAndSave(content))
                         .build();
 
@@ -132,10 +136,13 @@ public class ArticleService {
         return articles.stream()
                 .map(article -> ArticleResponseDto.builder()
                         .articleId(article.getArticleId())
+                        .articleStatus(article.getArticleStatus().name())
                         .title(article.getTitle())
                         .content(article.getContent())
                         .date(article.getDate())
                         .category(article.getCategory())
+                        .originalUrl(article.getOriginalUrl())
+                        .summary(article.getSummary())
                         .build())
                 .toList();
     }
