@@ -16,7 +16,12 @@ public class ArticleResponseDto {
     private String category;
 
     private String title;
+
     private String content;
+
     private String date;
-    private String category;
+
+    private String originalUrl;
+
+    private String summary;
 }
