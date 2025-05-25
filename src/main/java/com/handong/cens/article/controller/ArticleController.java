@@ -17,12 +17,6 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
-    @GetMapping("/save")
-    public ResponseEntity<Void> saveArticles() {
-        articleService.saveArticles();
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping
     public ResponseEntity<List<ArticleResponseDto>> getArticles(@RequestParam(value = "code", required = false) Integer code) {
         if (code == null) {
@@ -32,10 +26,18 @@ public class ArticleController {
         }
     }
 
+    // 뉴스 기사 크롤링
+    @GetMapping("/save")
+    public ResponseEntity<String> saveArticles() {
+        articleService.saveArticles();
+        return ResponseEntity.ok("SAVE OK");
+    }
+
+    // 전체 뉴스 삭제
     @GetMapping("/clear")
-    public ResponseEntity<Void> clearArticles() {
+    public ResponseEntity<String> clearArticles() {
         articleService.clearArticles();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("CLEAR OK");
     }
 
     @GetMapping("/summary/{articleId}")

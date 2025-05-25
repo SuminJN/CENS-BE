@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.handong.cens.article.dto.response.ArticleResponseDto;
+import com.handong.cens.article.entity.ArticleStatus;
 import com.handong.cens.commons.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import com.handong.cens.article.entity.Article;
@@ -49,7 +50,9 @@ public class ArticleService {
             try {
                 doc = Jsoup.connect(url).get();
             } catch (IOException e) {
-                throw new CustomException(CRAWLING_PAGE_NOT_FOUND);
+//                throw new CustomException(CRAWLING_PAGE_NOT_FOUND);
+                log.info("크롤링할 페이지를 찾을 수 없습니다. URL: {}", url);
+                continue; // 페이지를 찾을 수 없으면 다음 카테고리로 넘어감
             }
 
             // 지정된 선택자를 사용하여 뉴스 제목 및 링크 요소를 선택
@@ -57,6 +60,8 @@ public class ArticleService {
 
             // 각 뉴스 제목 요소를 순회하며 처리
             for (Element element : titles) {
+
+                boolean isEnabled = true;
 
                 // 뉴스 링크와 제목을 출력
                 String articleLink = element.attr("href"); // 뉴스 링크
@@ -67,23 +72,31 @@ public class ArticleService {
                 try {
                     content = Jsoup.connect(articleLink).get().select(articleSelector).text();
                 } catch (IOException e) {
-                    throw new CustomException(ARTICLE_CONTENT_NOT_FOUND);
+//                    throw new CustomException(ARTICLE_CONTENT_NOT_FOUND);
+                    log.info("기사 본문을 찾을 수 없습니다. 기사 링크: {}", articleLink);
+                    content = "본문 내용 없음"; // 본문 내용이 없을 경우 기본값 설정
+                    isEnabled = false;
                 }
 
                 String date = null;
                 try {
                     date = Jsoup.connect(articleLink).get().select(dateSelector).text();
                 } catch (IOException e) {
-                    throw new CustomException(ARTICLE_DATE_NOT_FOUND);
+//                    throw new CustomException(ARTICLE_DATE_NOT_FOUND);
+                    log.info("기사 날짜를 찾을 수 없습니다. 기사 링크: {}", articleLink);
+                    date = "날짜 정보 없음"; // 날짜 정보가 없을 경우 기본값 설정
+                    isEnabled = false;
                 }
 
                 // Article 객체 생성 및 저장
                 Article article = Article.builder()
+                        .articleStatus(isEnabled ? ArticleStatus.Enabled : ArticleStatus.Disabled)
                         .title(title)
                         .content(content)
                         .date(date)
                         .category(category.getDescription())
                         .originalUrl(articleLink)
+                        .summary("뉴스 요약 테스트 중 입니다.") // 요약은 나중에 OpenAI API로 처리
 //                        .summary(summarizeAndSave(content))
                         .build();
 
@@ -123,10 +136,13 @@ public class ArticleService {
         return articles.stream()
                 .map(article -> ArticleResponseDto.builder()
                         .articleId(article.getArticleId())
+                        .articleStatus(article.getArticleStatus().name())
                         .title(article.getTitle())
                         .content(article.getContent())
                         .date(article.getDate())
                         .category(article.getCategory())
+                        .originalUrl(article.getOriginalUrl())
+                        .summary(article.getSummary())
                         .build())
                 .toList();
     }
