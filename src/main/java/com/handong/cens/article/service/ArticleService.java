@@ -43,6 +43,7 @@ public class ArticleService {
             String url = "https://news.naver.com/section/" + category.getCode(); // 크롤링 할 사이트 URL
             String headlineNewsSelector = "li.sa_item._SECTION_HEADLINE:not(.is_blind) a.sa_text_title._NLOG_IMPRESSION"; // 뉴스 제목 및 링크 선택자
             String dateSelector = "span.media_end_head_info_datestamp_time._ARTICLE_DATE_TIME";
+            String modifiedDateSelector = "span.media_end_head_info_datestamp_time._ARTICLE_MODIFY_DATE_TIME";
             String articleSelector = "article#dic_area"; // 뉴스 본문 선택자
             Document doc = null;
 
@@ -84,8 +85,14 @@ public class ArticleService {
                 } catch (IOException e) {
 //                    throw new CustomException(ARTICLE_DATE_NOT_FOUND);
                     log.info("기사 날짜를 찾을 수 없습니다. 기사 링크: {}", articleLink);
-                    date = "날짜 정보 없음"; // 날짜 정보가 없을 경우 기본값 설정
-                    isEnabled = false;
+                }
+
+                // 수정된 날짜가 있는 경우, 수정된 날짜를 가져옴
+                String modifiedDate = null;
+                try {
+                    modifiedDate = Jsoup.connect(articleLink).get().select(modifiedDateSelector).text();
+                } catch (IOException e) {
+                    log.info("기사 수정 날짜를 찾을 수 없습니다. 기사 링크: {}", articleLink);
                 }
 
                 // Article 객체 생성 및 저장
@@ -93,7 +100,8 @@ public class ArticleService {
                         .articleStatus(isEnabled ? ArticleStatus.Enabled : ArticleStatus.Disabled)
                         .title(title)
                         .content(content)
-                        .date(date)
+                        .createDate(date)
+                        .modifiedDate(modifiedDate)
                         .category(category.getDescription())
                         .originalUrl(articleLink)
                         .summary("뉴스 요약 테스트 중 입니다.") // 요약은 나중에 OpenAI API로 처리
@@ -139,7 +147,8 @@ public class ArticleService {
                         .articleStatus(article.getArticleStatus().name())
                         .title(article.getTitle())
                         .content(article.getContent())
-                        .date(article.getDate())
+                        .createDate(article.getCreateDate())
+                        .modifiedDate(article.getModifiedDate())
                         .category(article.getCategory())
                         .originalUrl(article.getOriginalUrl())
                         .summary(article.getSummary())
@@ -155,7 +164,7 @@ public class ArticleService {
                         .articleId(article.getArticleId())
                         .title(article.getTitle())
                         .content(article.getContent())
-                        .date(article.getDate())
+                        .createDate(article.getCreateDate())
                         .category(article.getCategory())
                         .build())
                 .toList();

@@ -19,7 +19,9 @@ public class ArticleResponseDto {
 
     private String content;
 
-    private String date;
+    private String createDate;
+
+    private String modifiedDate;
 
     private String originalUrl;
 
