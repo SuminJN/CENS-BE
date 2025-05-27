@@ -1,11 +1,11 @@
-package com.handong.cens.member.dto;
+package com.handong.cens.oauth.entity;
 
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
 
 @AllArgsConstructor
-public class GoogleUserDetails implements OAuth2UserInfo{
+public class GoogleUserDetails implements OAuth2UserInfo {
 
     private Map<String, Object> attributes;
 

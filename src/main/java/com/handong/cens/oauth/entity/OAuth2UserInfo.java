@@ -1,4 +1,4 @@
-package com.handong.cens.member.dto;
+package com.handong.cens.oauth.entity;
 
 public interface OAuth2UserInfo {
     String getProvider();
