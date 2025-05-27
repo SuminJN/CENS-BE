@@ -3,6 +3,7 @@ package com.handong.cens.member.dto;
 import com.handong.cens.member.domain.MemberRole;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 @Getter
 @Setter
+@ToString
 public class MemberDto extends User {
 
     private String loginId;

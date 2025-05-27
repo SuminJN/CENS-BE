@@ -36,7 +36,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         }
 
         String path = request.getRequestURI();
-        log.info("check uri.............." + path);
+        log.info("check uri: " + path);
 
         // /api/member/ 경로의 호출은 처크하지 않음
         if (path.startsWith("/oauth2/authorization")) {
@@ -74,7 +74,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
             log.info("----------------");
             log.info(memberDto);
-            log.info(memberDto.getAuthorities());
+            log.info("----------------");
 
             UsernamePasswordAuthenticationToken authenticationToken
                     = new UsernamePasswordAuthenticationToken(memberDto, null, memberDto.getAuthorities());
