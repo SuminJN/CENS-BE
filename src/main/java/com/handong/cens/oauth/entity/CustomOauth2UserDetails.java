@@ -1,6 +1,7 @@
-package com.handong.cens.member.dto;
+package com.handong.cens.oauth.entity;
 
 import com.handong.cens.member.domain.Member;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+@Getter
 public class CustomOauth2UserDetails implements UserDetails, OAuth2User {
 
     private final Member member;

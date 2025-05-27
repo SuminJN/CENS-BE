@@ -1,10 +1,9 @@
-package com.handong.cens.member.service;
+package com.handong.cens.oauth.service;
 
 import com.handong.cens.member.domain.Member;
-import com.handong.cens.member.domain.MemberRole;
-import com.handong.cens.member.dto.CustomOauth2UserDetails;
-import com.handong.cens.member.dto.GoogleUserDetails;
-import com.handong.cens.member.dto.OAuth2UserInfo;
+import com.handong.cens.oauth.entity.CustomOauth2UserDetails;
+import com.handong.cens.oauth.entity.GoogleUserDetails;
+import com.handong.cens.oauth.entity.OAuth2UserInfo;
 import com.handong.cens.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +49,6 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
                     .email(email)
                     .provider(provider)
                     .providerId(providerId)
-                    .role(MemberRole.USER)
                     .build();
             memberRepository.save(member);
         } else{
