@@ -3,6 +3,8 @@ package com.handong.cens.article.controller;
 import com.handong.cens.article.dto.response.ArticleResponseDto;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +39,22 @@ public class ArticleController {
         return ResponseEntity.ok("CLEAR OK");
     }
 
-    @Operation(summary = "뉴스 목록 조회", description = "카테고리 코드가 없으면 전체 기사를, 있으면 해당 코드의 기사만 반환합니다.\n\n" +
-            "{100: 정치, 101: 경제, 102: 사회, 103: 생활/문화, 104: 세계, 105: IT/과학}")
+    @Operation(summary = "뉴스 목록 조회", description = "카테고리 코드가 없으면 전체 기사, 있으면 해당 카테고리의 기사만 반환합니다.")
+    @Parameters({
+            @Parameter(
+                    name = "code",
+                    description = """
+                            카테고리 코드:
+                            - 100: 정치
+                            - 101: 경제
+                            - 102: 사회
+                            - 103: 생활/문화
+                            - 104: 세계
+                            - 105: IT/과학
+                            """,
+                    example = "101"
+            )
+    })
     @GetMapping
     public ResponseEntity<List<ArticleResponseDto>> getArticles(@RequestParam(value = "code", required = false) Integer code) {
         if (code == null) {
