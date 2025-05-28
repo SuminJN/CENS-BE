@@ -2,6 +2,7 @@ package com.handong.cens.commons.exception;
 
 import com.handong.cens.commons.exception.dto.StatusResponseDto;
 import com.handong.cens.commons.util.CustomJWTException;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
+@Hidden
 @RestControllerAdvice
 public class GlobalCatcher {
 
     @ExceptionHandler({Exception.class, RuntimeException.class})
-    protected ResponseEntity<StatusResponseDto> catchException(RuntimeException ex) {
+    protected ResponseEntity<StatusResponseDto> catchException(Exception ex) {
         log.error("예외 핸들링",ex);
         return ResponseEntity.internalServerError().body(StatusResponseDto.addStatus(500));
     }

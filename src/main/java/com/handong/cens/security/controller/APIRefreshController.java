@@ -2,10 +2,12 @@ package com.handong.cens.security.controller;
 
 import com.handong.cens.commons.util.CustomJWTException;
 import com.handong.cens.commons.util.JWTUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -14,11 +16,17 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
+@Tag(name = "Auth", description = "인증 관련 API")
 public class APIRefreshController {
 
     private final JWTUtil jwtUtil;
 
-    @RequestMapping("/api/token/refresh")
+    @Operation(
+            summary = "토큰 재발급",
+            description = "만료된 Access Token을 검증하고 유효한 Refresh Token을 이용해 새로운 토큰을 발급합니다. " +
+                    "요청 헤더에 Authorization: Bearer를 accessToken 과 refreshToken 파라미터에 포함해야 합니다."
+    )
+    @PostMapping("/api/token/refresh")
     public Map<String, Object> refresh(@RequestHeader("Authorization") String authHeader, String refreshToken) {
 
         if (refreshToken == null) {
