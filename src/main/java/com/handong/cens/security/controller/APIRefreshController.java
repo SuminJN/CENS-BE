@@ -4,8 +4,8 @@ import com.handong.cens.commons.util.CustomJWTException;
 import com.handong.cens.commons.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -18,7 +18,7 @@ public class APIRefreshController {
 
     private final JWTUtil jwtUtil;
 
-    @RequestMapping("/api/token/refresh")
+    @PostMapping("/api/token/refresh")
     public Map<String, Object> refresh(@RequestHeader("Authorization") String authHeader, String refreshToken) {
 
         if (refreshToken == null) {
