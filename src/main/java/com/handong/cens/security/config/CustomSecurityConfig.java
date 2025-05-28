@@ -2,7 +2,7 @@ package com.handong.cens.security.config;
 
 import com.handong.cens.oauth.service.CustomOauth2UserService;
 import com.handong.cens.security.filter.JWTCheckFilter;
-import com.handong.cens.security.handler.OAuth2SuccessHandler;
+import com.handong.cens.oauth.handler.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;

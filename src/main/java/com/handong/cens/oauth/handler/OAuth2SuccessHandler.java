@@ -1,4 +1,4 @@
-package com.handong.cens.security.handler;
+package com.handong.cens.oauth.handler;
 
 import com.handong.cens.commons.util.JWTUtil;
 import com.handong.cens.member.domain.Member;
