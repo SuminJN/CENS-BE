@@ -1,6 +1,7 @@
 package com.handong.cens.commons.exception;
 
 import com.handong.cens.commons.exception.dto.StatusResponseDto;
+import com.handong.cens.commons.util.CustomJWTException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestControllerAdvice
@@ -52,4 +54,20 @@ public class GlobalCatcher {
         return errors;
     }
 
+    @ExceptionHandler(CustomJWTException.class)
+    public ResponseEntity<?> handleJWTException(CustomJWTException ex) {
+
+        log.warn("JWT Exception: {}", ex.getMessage());
+
+        // 만료 토큰
+        if (ex.getMessage().equals("Expired")) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "ACCESS_TOKEN_EXPIRED"));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("error", "INVALID_JWT", "message", ex.getMessage()));
+    }
 }
