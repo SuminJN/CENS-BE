@@ -38,12 +38,12 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         log.info("check uri: " + path);
 
-        // /api/member/ 경로의 호출은 처크하지 않음
-        if (path.startsWith("/oauth2/authorization")) {
-            return true;
-        }
-
-        return false;
+        return path.startsWith("/v3/api-docs") ||
+                path.startsWith("/swagger-ui") ||
+                path.startsWith("/swagger-resources") ||
+                path.startsWith("/oauth2/authorization") ||
+                path.startsWith("/api/token") ||
+                request.getMethod().equals("OPTIONS");
     }
 
     @Override
