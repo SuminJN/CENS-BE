@@ -1,6 +1,7 @@
 package com.handong.cens.article.controller;
 
 import com.handong.cens.article.dto.response.ArticleResponseDto;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.handong.cens.article.service.ArticleService;
@@ -27,6 +28,7 @@ public class ArticleController {
     }
 
     // 뉴스 기사 크롤링
+    @Hidden
     @GetMapping("/save")
     public ResponseEntity<String> saveArticles() {
         articleService.saveArticles();
@@ -34,6 +36,7 @@ public class ArticleController {
     }
 
     // 전체 뉴스 삭제
+    @Hidden
     @GetMapping("/clear")
     public ResponseEntity<String> clearArticles() {
         articleService.clearArticles();
