@@ -25,7 +25,6 @@ import java.util.List;
 @EnableMethodSecurity // 특정 권한 사용자에게 권한 부여
 public class CustomSecurityConfig {
 
-    private final JWTCheckFilter jwtCheckFilter;
     private final CustomOauth2UserService customOauth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
@@ -43,15 +42,15 @@ public class CustomSecurityConfig {
 
         http.csrf(config -> config.disable());
 
-        // JWT 체크
-        http.addFilterBefore(jwtCheckFilter, UsernamePasswordAuthenticationFilter.class);
+//         JWT 체크
+//        http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        // OAuth2 로그인 활성화 -> /oauth2/authorization/google
-        http.oauth2Login(oauth2 -> oauth2
-                .userInfoEndpoint(userInfo -> userInfo
-                        .userService(customOauth2UserService))
-                .successHandler(oAuth2SuccessHandler) // 여기서 JWT 발급 & 리디렉트
-        );
+//        // OAuth2 로그인 활성화 -> /oauth2/authorization/google
+//        http.oauth2Login(oauth2 -> oauth2
+//                .userInfoEndpoint(userInfo -> userInfo
+//                        .userService(customOauth2UserService))
+//                .successHandler(oAuth2SuccessHandler) // 여기서 JWT 발급 & 리디렉트
+//        );
 
         return http.build();
     }
