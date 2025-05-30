@@ -14,12 +14,9 @@ import java.util.Date;
 import java.util.Map;
 
 @RestController
-@RequiredArgsConstructor
 @Log4j2
 @Tag(name = "Auth", description = "인증 관련 API")
 public class APIRefreshController {
-
-    private final JWTUtil jwtUtil;
 
     @Operation(
             summary = "토큰 재발급",
@@ -45,14 +42,14 @@ public class APIRefreshController {
         }
 
         // Refresh 토큰 검증
-        Map<String, Object> claims = jwtUtil.validateToken(refreshToken);
+        Map<String, Object> claims = JWTUtil.validateToken(refreshToken);
 
         log.info("refresh ... claims: {}", claims);
 
-        String newAccessToken = jwtUtil.generateToken(claims, 10);
+        String newAccessToken = JWTUtil.generateToken(claims, 10);
 
         String newRefreshToken = checkTime((Integer) claims.get("exp"))
-                ? jwtUtil.generateToken(claims, 60 * 24)
+                ? JWTUtil.generateToken(claims, 60 * 24)
                 : refreshToken;
 
         return Map.of("accessToken", newAccessToken, "refreshToken", newRefreshToken);
@@ -77,7 +74,7 @@ public class APIRefreshController {
     private boolean checkExpiredToken(String token) {
 
         try {
-            jwtUtil.validateToken(token);
+            JWTUtil.validateToken(token);
         } catch (CustomJWTException ex) {
             if (ex.getMessage().equals("Expired")) {
                 return true;

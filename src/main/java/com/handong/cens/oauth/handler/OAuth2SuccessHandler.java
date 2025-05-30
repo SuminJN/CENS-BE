@@ -15,10 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
-
-    private final JWTUtil jwtUtil;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -38,8 +35,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         Map<String, Object> claims = memberDto.getClaim();
 
-        String accessToken = jwtUtil.generateToken(claims, 30); // 30분
-        String refreshToken = jwtUtil.generateToken(claims, 60 * 24); // 24시간
+        String accessToken = JWTUtil.generateToken(claims, 30); // 30분
+        String refreshToken = JWTUtil.generateToken(claims, 60 * 24); // 24시간
 
         // 예시: JWT를 리다이렉트 URL 파라미터에 포함시켜 전달
         String redirectUrl = "http://localhost:3000/oauth2/success?" +
@@ -48,3 +45,5 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         response.sendRedirect(redirectUrl);
     }
 }
+
+//   res.redirect(`chrome-extension://${EXTENSION_ID}/popup.html?token=${token}`);
