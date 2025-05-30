@@ -20,11 +20,8 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 @Log4j2
-@Component
 @RequiredArgsConstructor
 public class JWTCheckFilter extends OncePerRequestFilter {
-
-    private final JWTUtil jwtUtil;
 
     // 체크하지 않을 경로 지정
     @Override
@@ -43,6 +40,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
                 path.startsWith("/swagger-resources") ||
                 path.startsWith("/oauth2/authorization") ||
                 path.startsWith("/api/token") ||
+                path.startsWith("/favicon.ico") ||
                 request.getMethod().equals("OPTIONS");
     }
 
@@ -60,7 +58,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         try {
             // Bearer accessToken
             String accessToken = authHeaderStr.substring(7);
-            Map<String, Object> claims = jwtUtil.validateToken(accessToken);
+            Map<String, Object> claims = JWTUtil.validateToken(accessToken);
 
             log.info("JWT Claims={}", claims);
 
