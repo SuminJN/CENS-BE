@@ -104,8 +104,8 @@ public class ArticleService {
                         .modifiedDate(modifiedDate)
                         .category(category.getDescription())
                         .originalUrl(articleLink)
-                        .summary("뉴스 요약 테스트 중 입니다.") // 요약은 나중에 OpenAI API로 처리
-//                        .summary(summarizeAndSave(content))
+//                        .summary("뉴스 요약 테스트 중 입니다.") // 요약은 나중에 OpenAI API로 처리
+                        .summary(summarizeAndSave(content))
                         .build();
 
                 // Article 객체를 데이터베이스에 저장

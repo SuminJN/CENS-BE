@@ -23,21 +23,21 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
-    // 뉴스 기사 크롤링
-    @Hidden
-    @GetMapping("/save")
-    public ResponseEntity<String> saveArticles() {
-        articleService.saveArticles();
-        return ResponseEntity.ok("SAVE OK");
-    }
-
-    // 전체 뉴스 삭제
-    @Hidden
-    @GetMapping("/clear")
-    public ResponseEntity<String> clearArticles() {
-        articleService.clearArticles();
-        return ResponseEntity.ok("CLEAR OK");
-    }
+//    // 뉴스 기사 크롤링
+//    @Hidden
+//    @GetMapping("/save")
+//    public ResponseEntity<String> saveArticles() {
+//        articleService.saveArticles();
+//        return ResponseEntity.ok("SAVE OK");
+//    }
+//
+//    // 전체 뉴스 삭제
+//    @Hidden
+//    @GetMapping("/clear")
+//    public ResponseEntity<String> clearArticles() {
+//        articleService.clearArticles();
+//        return ResponseEntity.ok("CLEAR OK");
+//    }
 
     @Operation(summary = "뉴스 목록 조회", description = "카테고리 코드가 없으면 전체 기사, 있으면 해당 카테고리의 기사만 반환합니다.")
     @Parameters({
