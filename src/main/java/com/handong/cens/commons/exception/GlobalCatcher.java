@@ -21,9 +21,15 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalCatcher {
 
-    @ExceptionHandler({Exception.class, RuntimeException.class})
+    @ExceptionHandler({Exception.class})
     protected ResponseEntity<StatusResponseDto> catchException(Exception ex) {
         log.error("예외 핸들링",ex);
+        return ResponseEntity.internalServerError().body(StatusResponseDto.addStatus(500));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<StatusResponseDto> catchRuntimeException(RuntimeException ex) {
+        log.error("런타임 예외", ex);
         return ResponseEntity.internalServerError().body(StatusResponseDto.addStatus(500));
     }
 
