@@ -45,12 +45,12 @@ public class CustomSecurityConfig {
 //         JWT 체크
 //        http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
-//        // OAuth2 로그인 활성화 -> /oauth2/authorization/google
-//        http.oauth2Login(oauth2 -> oauth2
-//                .userInfoEndpoint(userInfo -> userInfo
-//                        .userService(customOauth2UserService))
-//                .successHandler(oAuth2SuccessHandler) // 여기서 JWT 발급 & 리디렉트
-//        );
+        // OAuth2 로그인 활성화 -> /oauth2/authorization/google
+        http.oauth2Login(oauth2 -> oauth2
+                .userInfoEndpoint(userInfo -> userInfo
+                        .userService(customOauth2UserService))
+                .successHandler(oAuth2SuccessHandler) // 여기서 JWT 발급 & 리디렉트
+        );
 
         return http.build();
     }

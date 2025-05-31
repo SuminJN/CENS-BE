@@ -7,6 +7,7 @@ import com.handong.cens.oauth.entity.CustomOauth2UserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,9 @@ import java.util.Map;
 
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
+
+    @Value("${oauth2.redirect-url}")
+    private String redirectUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -39,10 +43,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String refreshToken = JWTUtil.generateToken(claims, 60 * 24); // 24시간
 
         // 예시: JWT를 리다이렉트 URL 파라미터에 포함시켜 전달
-        String redirectUrl = "http://localhost:3000/oauth2/success?" +
-                "accessToken=" + accessToken
+        String extentionRedirectUrl = redirectUrl +
+                "?accessToken=" + accessToken
                 + "&refreshToken=" + refreshToken;
-        response.sendRedirect(redirectUrl);
+        response.sendRedirect(extentionRedirectUrl);
     }
 }
 
