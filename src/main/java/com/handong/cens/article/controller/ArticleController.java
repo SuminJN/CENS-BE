@@ -64,10 +64,10 @@ public class ArticleController {
         }
     }
 
-    @Operation(summary = "뉴스 요약 조회", description = "기사 ID를 기반으로 해당 뉴스의 요약을 반환합니다.")
-    @GetMapping("/summary/{articleId}")
-    public ResponseEntity<String> getSummary(@PathVariable Long articleId) {
-        String summary = articleService.getSummary(articleId);
-        return ResponseEntity.ok().body(summary);
+    @Operation(summary = "뉴스 상세 조회", description = "기사 ID를 기반으로 해당 뉴스의 상세 정보를 반환합니다.")
+    @GetMapping("/{articleId}")
+    public ResponseEntity<ArticleResponseDto> getArticle(@PathVariable Long articleId) {
+        ArticleResponseDto article = articleService.getArticle(articleId);
+        return ResponseEntity.ok().body(article);
     }
 }
