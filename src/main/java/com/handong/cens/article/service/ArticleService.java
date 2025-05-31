@@ -68,10 +68,12 @@ public class ArticleService {
                 String articleLink = element.attr("href"); // 뉴스 링크
 
                 String title = element.text();
+                title = title.replace("\"", "");
 
                 String content = null;
                 try {
                     content = Jsoup.connect(articleLink).get().select(articleSelector).text();
+                    content = content.replace("\"", "");
                 } catch (IOException e) {
 //                    throw new CustomException(ARTICLE_CONTENT_NOT_FOUND);
                     log.info("기사 본문을 찾을 수 없습니다. 기사 링크: {}", articleLink);
