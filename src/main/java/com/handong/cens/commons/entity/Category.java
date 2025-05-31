@@ -2,6 +2,8 @@ package com.handong.cens.commons.entity;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum Category {
 
@@ -19,5 +21,12 @@ public enum Category {
     Category(int code, String description) {
         this.code = code;
         this.description = description;
+    }
+
+    public static Category fromCode(int code) {
+        return Arrays.stream(values())
+                .filter(c -> c.code == code)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 카테고리 코드입니다: " + code));
     }
 }
