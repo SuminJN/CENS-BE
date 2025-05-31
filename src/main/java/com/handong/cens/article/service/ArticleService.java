@@ -89,21 +89,12 @@ public class ArticleService {
                     log.info("기사 날짜를 찾을 수 없습니다. 기사 링크: {}", articleLink);
                 }
 
-                // 수정된 날짜가 있는 경우, 수정된 날짜를 가져옴
-                String modifiedDate = null;
-                try {
-                    modifiedDate = Jsoup.connect(articleLink).get().select(modifiedDateSelector).text();
-                } catch (IOException e) {
-                    log.info("기사 수정 날짜를 찾을 수 없습니다. 기사 링크: {}", articleLink);
-                }
-
                 // Article 객체 생성 및 저장
                 Article article = Article.builder()
                         .articleStatus(isEnabled ? ArticleStatus.Enabled : ArticleStatus.Disabled)
                         .title(title)
                         .content(content)
                         .createDate(date)
-                        .modifiedDate(modifiedDate)
                         .category(category.getDescription())
                         .originalUrl(articleLink)
 //                        .summary("뉴스 요약 테스트 중 입니다.") // 요약은 나중에 OpenAI API로 처리
@@ -150,7 +141,6 @@ public class ArticleService {
                         .title(article.getTitle())
                         .content(article.getContent())
                         .createDate(article.getCreateDate())
-                        .modifiedDate(article.getModifiedDate())
                         .category(article.getCategory())
                         .originalUrl(article.getOriginalUrl())
                         .summary(article.getSummary())

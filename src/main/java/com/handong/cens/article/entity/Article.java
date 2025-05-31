@@ -28,8 +28,6 @@ public class Article {
 
     private String createDate;
 
-    private String modifiedDate;
-
     private String originalUrl;
 
     @Lob
