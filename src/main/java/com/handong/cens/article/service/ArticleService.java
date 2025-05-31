@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import com.handong.cens.article.dto.response.ArticleResponseDto;
-import com.handong.cens.article.entity.ArticleStatus;
 import com.handong.cens.commons.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import com.handong.cens.article.entity.Article;

@@ -16,9 +16,6 @@ public class Article {
     @Column(name = "article_id")
     private Long articleId;
 
-    @Enumerated(EnumType.STRING)
-    private ArticleStatus articleStatus;
-
     private String category;
 
     private String title;
