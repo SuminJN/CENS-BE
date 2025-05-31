@@ -109,7 +109,7 @@ public class ArticleService {
         }
     }
 
-    public String summarizeAndSave(String content) {
+    private String summarizeAndSave(String content) {
         String prompt = "다음 기사를 한국어로 1문장 이내로 요약해줘:\n\n" + content;
 
         return openAiChatModel.call(prompt);
