@@ -11,8 +11,6 @@ public class ArticleResponseDto {
 
     private Long articleId;
 
-    private String articleStatus; // 활성화 or 비활성화
-
     private String category;
 
     private String title;
@@ -20,8 +18,6 @@ public class ArticleResponseDto {
     private String content;
 
     private String createDate;
-
-    private String modifiedDate;
 
     private String originalUrl;
 

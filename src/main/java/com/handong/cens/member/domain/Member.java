@@ -1,7 +1,10 @@
 package com.handong.cens.member.domain;
 
+import com.handong.cens.commons.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Builder
@@ -24,6 +27,13 @@ public class Member {
     private String password;
 
     private String name;
+
+    @Setter
+    @ElementCollection
+    @CollectionTable(name = "member_category", joinColumns = @JoinColumn(name = "member_id"))
+    @Enumerated(EnumType.STRING) // Category가 enum일 경우
+    @Column(name = "category")
+    private List<Category> categories;
 
     @Enumerated(EnumType.STRING)
     private MemberRole role;
