@@ -93,13 +93,22 @@ class ArticleServiceTest {
 
     @Test
     void testSummarizeAndSave() {
+        // given
         String content = "이것은 테스트 기사입니다.";
+        String expectedPrompt = "다음 기사를 한국어로 1문장 이내로 요약해줘:\n\n" + content;
         String summary = "테스트 요약";
 
         when(openAiChatModel.call(anyString())).thenReturn(summary);
 
+        // when
         String result = ArticleServiceTestHelper.summarize(content, openAiChatModel);
 
+        // then
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(openAiChatModel, times(1)).call(captor.capture());
+
+        String actualPrompt = captor.getValue();
+        assertThat(actualPrompt).isEqualTo(expectedPrompt);
         assertThat(result).isEqualTo(summary);
     }
 
