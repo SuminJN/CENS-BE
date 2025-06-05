@@ -44,6 +44,8 @@ class ArticleServiceTest {
                 .build();
     }
 
+    private static final int CATEGORY_CODE_POLITICS = 100;
+
     @Test
     void testGetAllArticles() {
         List<Article> mockArticles = List.of(mockArticle());
@@ -61,7 +63,7 @@ class ArticleServiceTest {
         when(articleRepository.findByCategory("정치"))
                 .thenReturn(List.of(mockArticle()));
 
-        List<ArticleResponseDto> result = articleService.getArticlesByCategoryCode(100); // 100 = 정치
+        List<ArticleResponseDto> result = articleService.getArticlesByCategoryCode(CATEGORY_CODE_POLITICS);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getCategory()).isEqualTo("정치");
