@@ -98,13 +98,13 @@ class ArticleServiceTest {
 
         when(openAiChatModel.call(anyString())).thenReturn(summary);
 
-        String result = articleServiceTestHelper.summarize(content, openAiChatModel);
+        String result = ArticleServiceTestHelper.summarize(content, openAiChatModel);
 
         assertThat(result).isEqualTo(summary);
     }
 
     // 내부 메서드 테스트용 도우미 (private 메서드는 별도 래퍼로 테스트 가능)
-    static class articleServiceTestHelper {
+    static class ArticleServiceTestHelper {
         static String summarize(String content, OpenAiChatModel model) {
             String prompt = "다음 기사를 한국어로 1문장 이내로 요약해줘:\n\n" + content;
             return model.call(prompt);
