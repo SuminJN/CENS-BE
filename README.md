@@ -29,7 +29,7 @@ Google OAuth2 기반 로그인과 JWT 인증을 통해 보안성을 확보합니
 | DB / ORM  | MySQL,  JPA (Hibernate) |
 | 인증        | Google OAuth2, JWT   |
 | 테스트       | JUnit 5, Mockito               |
-| 기타        | Maven, Lombok, REST API        |
+| 기타        | Lombok, REST API        |
 
 ---
 
