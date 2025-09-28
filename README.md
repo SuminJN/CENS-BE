@@ -1,4 +1,4 @@
-# 📰 CENS-BE (Chrome Extension News Summary - Backend)
+# CENS-BE (Chrome Extension News Summary - Backend)
 
 **CENS-BE**는 뉴스 기사를 자동으로 요약해주는 크롬 확장 프로그램의 백엔드 서버입니다.  
 OpenAI API를 활용하여 뉴스 본문을 한 문장으로 요약하고, 다양한 카테고리의 기사를 저장·조회할 수 있도록 지원합니다. 
@@ -6,19 +6,19 @@ Google OAuth2 기반 로그인과 JWT 인증을 통해 보안성을 확보합니
 
 ---
 
-## 🚀 주요 기능
+## 주요 기능
 
-- 📰 Jsoup을 이용한 뉴스 기사 크롤링
-- 🧠 OpenAI GPT를 활용한 뉴스 요약 기능
-- 🔐 Google OAuth2 로그인 및 JWT 인증/인가
-- 🗂️ 기사 카테고리 코드 기반 필터링
-- 📝 전체 기사 목록 및 단일 기사 조회 API 제공
-- 🔐 예외 및 오류 처리 (CustomException)
-- ❌ 기사 전체 삭제 (관리자용 초기화 기능)
+- Jsoup을 이용한 뉴스 기사 크롤링
+- OpenAI GPT를 활용한 뉴스 요약 기능
+- Google OAuth2 로그인 및 JWT 인증/인가
+- 기사 카테고리 코드 기반 필터링
+- 전체 기사 목록 및 단일 기사 조회 API 제공
+- 예외 및 오류 처리 (CustomException)
+- 기사 전체 삭제 (관리자용 초기화 기능)
 
 ---
 
-## 🛠️ 기술 스택
+## 기술 스택
 
 | 구분        | 기술 스택                          |
 |-----------|--------------------------------|
@@ -33,7 +33,7 @@ Google OAuth2 기반 로그인과 JWT 인증을 통해 보안성을 확보합니
 
 ---
 
-## 🔐 인증/인가 구조
+## 인증/인가 구조
 
 - 사용자는 Google 계정으로 로그인합니다.
 - 최초 로그인 시 JWT access & refresh token 발급
@@ -43,7 +43,7 @@ Google OAuth2 기반 로그인과 JWT 인증을 통해 보안성을 확보합니
 ---
 
 
-## 🏛️ 프로젝트 구조
+## 프로젝트 구조
 
 ```
 src
@@ -61,7 +61,7 @@ src
 
 ---
 
-## ⚙️ 환경 변수 및 설정 예시
+## 환경 변수 및 설정 예시
 
 ```yaml
 # application.yml
@@ -86,7 +86,7 @@ spring:
 ```
 
 
-## 🤖 Commit Message Convention
+## Commit Message Convention
 
 - feat : 새로운 기능 추가, 기존의 기능을 요구 사항에 맞추어 수정
 - fix : 기능에 대한 버그 수정
@@ -98,16 +98,14 @@ spring:
 - release : 버전 릴리즈
 - merge : 병합
 
-## 🧑‍💻 developers
-
-- frontend: [corkang](https://github.com/corkang), [Park MinJun](https://github.com/ParkMinjun0721)
+## developers
+- PM: [taeminkim](https://github.com/taeminkim-408)
+- Scrum Master: [Hyeokmin Kwon](https://github.com/hyeokkiyaa)
+- Documenter: [Ye Chan Jeon]
+- frontend: [Shin Yeob Kang](https://github.com/corkang), [Park MinJun](https://github.com/ParkMinjun0721)
 - backend: [suminJN](https://github.com/SuminJN)
 
-## 📽️ Project Link
+## Project Link
 
-- [github](https://github.com/Chrome-Extension-News-Summary-CENS)
-
-
-```
-본 프로젝트는 한동대학교 소프트웨어공학 수업의 팀 프로젝트로 진행되었습니다.
-```
+- [Github](https://github.com/Chrome-Extension-News-Summary-CENS)
+- [Frontend Link](https://github.com/Chrome-Extension-News-Summary-CENS/CENS-FE)
